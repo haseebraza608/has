@@ -1,34 +1,4 @@
- <!DOCTYPE html>
-<html lang="en">
-<head>
-<tittle>MY PROFILE<tittle/>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HTML</title>
-    <style>
-        * {
-            margin: 0;
-        }
-    .body {
-        width: 100%;
-        height: 100vh;
-        background-image: url("cse_043.JPG");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-    @media screen and (min-width: 800px){
-        .body {
-        width: 100%;
-        height: 100vh;
-        background-image: url("has14.jpeg");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        }
-        
-    }
+
     ul {
         list-style-type: none;
         background: #333;
