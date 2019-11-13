@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<title>Feedback Form</title>
+<style>
+
+ 
+.body {
+	width: 100%;
+        	height: 100vh;
+	background-image: url("has28.jpg");
+        	background-position: center;
+        	background-repeat: no-repeat;
+        	background-size:cover;
+}
+a  {  
+color: red;
+font-size: 43px;
+}
+</style>
+<body>
+
+<div class="body">
+
+
+<ul><h1><font color="red">Feedback Form</font></h1>
+<form method="post" action="send_mail.php">
+<p><font color="yellow">
+<h2>Name
+<input type="text" name="Name"required>
+</label> 
+</font></h2>
+<form action="/action_page.php">
+<label><font color="orange">  Birthday:</label></font> <input type="date" name="bday">
+</form>
+
+<h2>
+<label>Email 
+<input type="email" name="email_address">
+</label>
+</h>
+<h4><font color="yellow">
+<label>Comments
+<textarea name="comments" maxlength="1100"></textarea>
+</label>
+</font></h4>
+
+<h2><font color="green"><button>Submit the form</font></button></h2>
+</form>
+<?php
+/*
+This first bit sets the email address that you want the form to be submitted to.
+You will need to change this value to a valid email address that you can access.
+*/
+$webmaster_email = "mr6528824@gmail.com";
+
+/*
+This bit sets the URLs of the supporting pages.
+If you change the names of any of the pages, you will need to change the values here.
+*/
+$feedback_page = "feedback_form.html";
+$error_page = "error_message.html";
+$thankyou_page = "thank_you.html";
+
+/*
+This next bit loads the form field data into variables.
+If you add a form field, you will need to add it here.
+*/
+$email_address = $_REQUEST['email_address'] ;
+$comments = $_REQUEST['comments'] ;
+$first_name = $_REQUEST['first_name'] ;
+$msg = 
+"First Name: " . $first_name . "\r\n" . 
+"Email: " . $email_address . "\r\n" . 
+"Comments: " . $comments ;
+
+/*
+The following function checks for email injection.
+Specifically, it checks for carriage returns - typically used by spammers to inject a CC list.
+*/
+function isInjected($str) {
+	$injections = array('(\n+)',
+	'(\r+)',
+	'(\t+)',
+	'(%0A+)',
+	'(%0D+)',
+	'(%08+)',
+	'(%09+)'
+	);
+	$inject = join('|', $injections);
+	$inject = "/$inject/i";
+	if(preg_match($inject,$str)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+// If the user tries to access this script directly, redirect them to the feedback form,
+if (!isset($_REQUEST['email_address'])) {
+header( "Location: $feedback_page" );
+}
+
+// If the form fields are empty, redirect to the error page.
+elseif (empty($first_name) || empty($email_address)) S
+header( "Location: $error_page" );
+}
+
+/* 
+If email injection is detected, redirect to the error page.
+If you add a form field, you should add it here.
+*/
+elseif ( isInjected($email_address) || isInjected($first_name)  || isInjected($comments) ) {
+header( "Location: $error_page" );
+}
+
+// If we passed all previous tests, send the email then redirect to the thank you page.
+else {
+
+	mail( "$webmaster_email", "Feedback Form Results", $msg );
+
+	header( "Location: $thankyou_page" );
+}
+
+?>
+<!DOCTYPE html>
+<title>Thank You</title>	
+
+<h1>Thanks for your feedback!</h1>
+<p><font color="yellow">We appreciate that you took the time to send us feedback. Your feedback has been sent to the webmaster.</font></p>
+<p><a href="JavaScript:history.go(.1);">Back to feedback form</a>.</p>
+<!DOCTYPE html>
+<title>Error</title>	
+
+<p><font color="blue">Please ensure you have completed all fields before submitting the form. </p>
+<p>Also ensure that there is only one email address.</font></p>
+<h2><a href="JavaScript:history.go(-1);">Back</h2></p>
+</body>
+</div>
+</ul>
+
